@@ -190,6 +190,21 @@
   var file;
   var base64String;
 
+  function apenasNumeros(string) 
+  {
+      var numsStr = string.replace(/[^0-9]/g,'');
+      return parseInt(numsStr);
+  }
+
+  $("#ano").keyup(function(e) {
+      var anoValue = apenasNumeros($("#ano").val());
+      if(Number.isInteger(anoValue)){
+        $("#ano").val(anoValue);
+      } else {
+        $("#ano").val(0);
+      }
+  });
+
   $("#photo").change(function(e) {
      // get a reference to the file
      //const file = e.target.files[0];
