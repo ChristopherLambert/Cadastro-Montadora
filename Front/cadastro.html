@@ -204,7 +204,6 @@
         $("#ano").val(0);
       }
   });
-
   $("#photo").change(function(e) {
      // get a reference to the file
      //const file = e.target.files[0];
@@ -226,8 +225,15 @@
       };
       reader.readAsDataURL(file);
   });
-
 	$("#botao").click(function() {
+
+      if($("#ano").val() == 0 || $("#ano").val() == "" || $("#ano").val() == "ano" 
+        || $("#nome").val() == "" || $("#nome").val() == "nome" || file == null ) {
+          alert("Preencha todos os campos");
+          return false;
+        }
+
+      $("#botao").hide();
       try{
         $.ajax({
         url: con + "newmontadora", 
@@ -238,12 +244,13 @@
           photo: "data:image/jpeg;base64, " + base64String, 
         },  
         success: function(data) {
-           alert(data.msg);
+          $("#botao").show();
+          alert(data.msg);
         },
-        statusCode: {
-          404: function() {
-           alert( "page not found" );
-        }}
+        error: function(xhr, status, error){
+          $("#botao").show();
+          alert( "Servidor Não Encontrado" );
+        }
       });
       }catch(ex){ 
         alert("Error")
